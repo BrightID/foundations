@@ -1,0 +1,43 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+# Example:
+#   context: |
+#     Tech stack: TypeScript, React, Node.js
+#     We use conventional commits
+#     Domain: e-commerce platform
+context: |
+  This is BrightID/foundations: the authoritative description of how
+  BrightID works and what we mean to build. Aura (evaluations, tiers,
+  energy-weighted scoring, teams, the league) is a core, inseparable facet
+  of BrightID, not a separate project - BrightID is the overarching
+  project and Aura extends its goals.
+
+  Not a code repo. Two kinds of content, governed differently:
+    - Big-picture docs (currently `how-aura-works.md`) - the mechanism and
+      intent for how the whole system works. Every change requires an
+      OpenSpec change proposal through this repo's spec-driven workflow.
+      No direct edits.
+    - History docs (currently `aura-historical-context.md`) - curated
+      indexes of external design docs and links, evolving as the project
+      does. Loosely governed: small additions can land directly; larger
+      revisions may go through OpenSpec at the maintainer's judgment, but
+      it isn't required the way it is for big-picture docs.
+
+  Other repos should treat this repo as a compass, not an OpenSpec store -
+  reference it in their own `context:` field as a pointer to the
+  authoritative design, not via OpenSpec's `references:` mechanism (which
+  expects a store of discrete capability specs, not one evolving narrative
+  document).
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
