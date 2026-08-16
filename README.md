@@ -31,9 +31,7 @@ This repo holds two different kinds of content, governed differently:
 
 This repo is an evolving narrative. Other BrightID repos should point at this repo
 as a compass in their own `openspec/config.yaml` `context:` field (a plain pointer,
-shown to the agent as background), not via OpenSpec's `references:` mechanism, which
-expects to index a store's `specs/` directory and has no path for
-reading a narrative doc whose section numbers move.
+shown to the agent as background).
 
-For specs and ADRs genuinely shared across multiple BrightID repos, see
+For specs and ADRs shared across multiple BrightID repos, see
 [BrightID/shared-specs](https://github.com/BrightID/shared-specs) instead.
