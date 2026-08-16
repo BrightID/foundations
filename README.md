@@ -6,9 +6,7 @@ build.
 BrightID is the overarching project. Aura — evaluations, tiers of
 evaluators, energy-weighted scoring, teams, the league — is a core,
 inseparable facet of BrightID, extending its goals, not a separate
-project superseding or standing apart from it. (The "Aura Node" fork
-merging back into "BrightID Node," leaving one node type that runs Aura,
-is the concrete evidence of that.)
+project superseding or standing apart from it.
 
 This repo holds two different kinds of content, governed differently:
 
@@ -43,5 +41,4 @@ expects to index a store's `specs/` directory and has no path for
 reading a narrative doc whose section numbers move.
 
 For specs and ADRs genuinely shared across multiple BrightID repos, see
-[BrightID/shared-specs](https://github.com/BrightID/shared-specs) instead
-— formerly `aura-decisions`, which this repo split off from.
+[BrightID/shared-specs](https://github.com/BrightID/shared-specs) instead.
