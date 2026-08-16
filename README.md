@@ -5,8 +5,7 @@ build.
 
 BrightID is the overarching project. Aura — evaluations, tiers of
 evaluators, energy-weighted scoring, teams, the league — is a core,
-inseparable facet of BrightID, extending its goals, not a separate
-project superseding or standing apart from it.
+inseparable facet of BrightID, extending its goals.
 
 This repo holds two different kinds of content, governed differently:
 
