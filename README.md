@@ -29,13 +29,9 @@ This repo holds two different kinds of content, governed differently:
   docs may be added later (e.g. a BrightID-history equivalent of this
   index) — none exist yet beyond the Aura one.
 
-This repo is not code, and it's not an OpenSpec
-[store](https://github.com/Fission-AI/OpenSpec/blob/main/docs/stores-beta/user-guide.md)
-either — a store is a collection of discrete, referenceable capability
-specs, and this repo is one evolving narrative document instead. Other
-BrightID repos should point at this repo as a compass in their own
-`openspec/config.yaml` `context:` field (a plain pointer, shown to the
-agent as background), not via OpenSpec's `references:` mechanism, which
+This repo is an evolving narrative. Other BrightID repos should point at this repo
+as a compass in their own `openspec/config.yaml` `context:` field (a plain pointer,
+shown to the agent as background), not via OpenSpec's `references:` mechanism, which
 expects to index a store's `specs/` directory and has no path for
 reading a narrative doc whose section numbers move.
 
