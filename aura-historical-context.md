@@ -2,7 +2,7 @@
 
 ## What's included
 
-This is an index of architectural and spec documents used throughout the history of Aura. These documents are hosted elsewhere. This index contains public links for humans and agents to follow to gain context while working on Aura. 
+This is an index of architectural and spec documents used throughout the history of Aura. These documents are hosted elsewhere. This index contains public links for humans and agents to follow to gain context while working on Aura.
 
 ## Format
 
@@ -74,7 +74,7 @@ Reference mobile app for BrightID
 
 #### [BrightID Node](https://github.com/BrightID/BrightID-Node)
 
-A node hosting the BrightID social graph 
+A node hosting the BrightID social graph
 
 ##### [BrightID Aura Node](https://github.com/Meta-Node/BrightID-Aura-Node)
 
@@ -91,15 +91,3 @@ Main Aura App with tools for participants in all roles.
 #### [Aura-player](https://github.com/BrightID/aura-player)
 
 Tries to make it easy for anyone to start answering questions and become an Aura "player."
-
-
-
-
-
-
-
-
-
-
-
-
