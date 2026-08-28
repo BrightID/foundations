@@ -28,8 +28,8 @@
 
 ## 3. Human review before it leaves
 
-- [ ] 3.1 Philip reads every changed word.
-- [ ] 3.2 Open the PR against `BrightID/foundations` with this change directory included.
+- [x] 3.1 Philip reads every changed word.
+- [x] 3.2 Open the PR against `BrightID/foundations` — https://github.com/BrightID/foundations/pull/1
 - [ ] 3.3 Adam and Ali review as humans, not by dispatching an agent.
 
 ## 4. Follow-on, not in this change
