@@ -115,7 +115,7 @@ Each **tier** says who is evaluated, what is asked about them, and who evaluates
 
 | Tier | Subjects | The question | Evaluated by |
 |---|---|---|---|
-| Subject | BrightIDs | is this the account to verify for them? | Players |
+| Subject | BrightIDs | is this the account to verify for this person? | Players |
 | Player | Players | does this player answer accurately? | Trainers |
 | Trainer | Trainers | does this trainer back accurate players? | Managers |
 | Manager | Managers | does this manager evaluate well? | Managers |
