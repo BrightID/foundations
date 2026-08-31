@@ -40,7 +40,9 @@ An evaluation is the only kind of fact in Aura. Scores, levels, and published an
 
 An evaluation is one participant's answer to a domain's question about a subject, with a confidence in that answer.
 
-In the BrightID domain, the question is "is this identifier this person's only account?", the answer is positive or negative, and confidence is one of four values.
+In the BrightID domain, the question is "is this the account to verify for this person?", the answer is positive or negative, and confidence is one of four values.
+
+You are not asked whether other accounts exist — you cannot know that, and Aura has never required anyone to account for every place they exist.
 
 > **▸ In the code.** Confidence is an integer 1–4, shown as Low / Medium / High / Very High (`aura:packages/domain/src/labels.ts`). One answer and one confidence per evaluator, per subject, per tier. Neither field is validated server-side — `confidence` is an unconstrained number in `web_services/foxx/brightid/schemas.js`.
 
@@ -56,7 +58,7 @@ Confidence is also a gate. A team can require that a level be supported by evalu
 
 A team tells its participants what its ratings mean. If a three means you have direct knowledge, then giving threes casually makes you unreliable, and the people evaluating you will score you accordingly. Another team may draw the line elsewhere.
 
-The conditions for giving a four are often subjective and unconfirmable, so they're a shared expectation rather than a rule the protocol enforces. Confidence is only comparable between evaluators who share a calibration; the team supplies it.
+The conditions for giving a four are often subjective and unconfirmable, so they're a shared expectation rather than a rule the protocol enforces. Confidence is only comparable between evaluators who share a calibration; the team supplies it. The two directions aren't symmetric: a strong positive rests on knowing the person, while a strong negative often doesn't — an account can be plainly wrong without your knowing whose it is.
 
 ### Negative answers count for more
 
@@ -113,7 +115,7 @@ Each **tier** says who is evaluated, what is asked about them, and who evaluates
 
 | Tier | Subjects | The question | Evaluated by |
 |---|---|---|---|
-| Subject | BrightIDs | is this a person's only account? | Players |
+| Subject | BrightIDs | is this the account to verify for this person? | Players |
 | Player | Players | does this player answer accurately? | Trainers |
 | Trainer | Trainers | does this trainer back accurate players? | Managers |
 | Manager | Managers | does this manager evaluate well? | Managers |
@@ -321,7 +323,7 @@ An evaluation is a standing claim, so it keeps counting until its author changes
 
 A restaurant review from five years ago wasn't incorrect; the restaurant has changed hands twice since. The reviewer has no new information and no reason to revisit their answer, so nothing about the evaluation itself will ever mark it as stale.
 
-Decay is the answer, as an option a domain turns on rather than a default. The rate tracks how fast the *subject* changes: near zero for "is this a unique human", fast for a restaurant.
+Decay is the answer, as an option a domain turns on rather than a default. The rate tracks how fast the *subject* changes: slow for which account to verify for a person, fast for a restaurant.
 
 > **▸ Not yet built.** Decay appears nowhere in the code.
 
@@ -345,7 +347,7 @@ There's room for automation around that: standing offers, tranches, a team joini
 
 ## 12. Privacy
 
-The rule Aura already lives by: **no information should be shared with anyone that doesn't already know it.** Verification comes from people who already know the person being verified — that's what makes it privacy-preserving rather than privacy-invading.
+The rule Aura already lives by: **no information should be shared with anyone that doesn't already know it.** Verification that carries weight comes from people who already know the person being verified — that's what makes it privacy-preserving rather than privacy-invading.
 
 For domains, at least four things separate: the **trust structure** (who evaluates whom, and their standing), the **question set**, the **answers**, and the **interpretation** that turns answers into levels. A business may want the structure open and the rest closed — asking questions and getting answers without publishing either.
 
