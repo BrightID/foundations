@@ -10,37 +10,46 @@ The document defines neither *canonical* nor *primary*, and has no framing that 
 
 ## Decisions
 
-**D1. Mark as ▸ In the code that a subject can be evaluated before anyone holds a key for it.** The row is created by the first evaluation with an empty signing-key list, and scoring treats it as it treats any other row. *Rejected:* introduce the canonical/claim design now — it decides open protocol questions inside a document change.
+**D1. Mark as ▸ In the code that a subject can be evaluated before its row holds any registered key.** The row is created by the first evaluation with an empty `signingKeys` list, and scoring treats it as it treats any other row. An empty list is not proof no one holds a key — `verifyUserSig`'s identifier-derived fallback only reaches a row that doesn't exist yet, so the document says both in one breath. *Rejected:* introduce the canonical/claim design now — it decides open protocol questions inside a document change.
 
-**D2. Mark claiming ▸ Not yet built, in two sentences.** No operation lets the holder of a key take over an existing row; the two operations that set keys cannot reach one. *Rejected:* describe how claiming should work — there is nothing built to describe, and the shape is exactly what is undecided.
+**D2. Mark claiming ▸ Not yet built, scoped to the row this change describes.** For a row an evaluation created — no registered keys, no recovery connections — no operation registers a key for it: *Add Signing Key* needs a signature the row can't produce with an empty key list; *Social Recovery* needs recovery connections designated in advance, which none of these rows have. *Rejected:* the earlier "no operation lets a key holder take over an existing row" — too broad, since the Social Recovery exception it ignores concerns existing rows in general, not this keyless case.
 
-**D3. Add three ▸ Open questions: subject proof, pre-claim evaluations, reconciliation of two rows.** They are the questions any claim mechanism must answer first. *Rejected:* answer them here with a standing threshold — authorization and weight are protocol decisions, not editorial ones.
+**D3. Add two ▸ Open questions — authorization and the claimant's relationship to the subject, and pre-claim evaluations — and generalise question 13 in place to cover reconciling two rows for one subject, rather than add a fourth question that duplicates it.** These are the questions any claim mechanism must answer first. *Rejected:* answer them here with a standing threshold — authorization and weight are protocol decisions, not editorial ones. *Rejected:* a separate reconciliation question — 13 already asks it for non-person subjects; generalising is smaller than duplicating.
 
 ## Risks / Trade-offs
 
 - Naming behaviour without a mechanism can read as licence to build one ad hoc. The **▸ Not yet built** and **▸ Open** markers are the guard; the tasks require they survive review.
-- `verifyUserSig` derives a signing key from the BrightID itself *only when no row exists*, so creating a keyless row removes that fallback. Whether that locks out a BrightID that has never transacted is a claim about the operation path, not the row primitive, and is deliberately not stated in the document.
-- The three open questions overlap open question 13 for non-person subjects. 13 is left as written; 17 states the general case.
+- `verifyUserSig` derives a signing key from the identifier itself *only when no row exists*, so a row an evaluation already created (empty `signingKeys`, row present) doesn't get that fallback either — now stated in §3. Whether that locks out a BrightID that has never transacted before being evaluated is a claim about the operation path, not the row primitive, and remains deliberately not stated as a lockout.
+- Question 13 now carries two questions instead of one — identifier dedup, and row reconciliation. Both concern the same missing claim mechanism; splitting them into separate numbered questions would suggest they're independently answerable when they aren't.
 
 ## Proposed document text
 
-Plain text, old → new. Nothing else in the document changes.
+Plain text, old → new. Nothing else in the document changes. Verified against `Meta-Node/BrightID-Aura-Node` `dev` at commit `469d0b0` (`git -C aura-node rev-parse origin/dev`).
 
 **§3 — insert after the closing paragraph of *Subjects need an identifier, not an identity* ("Identifiers for non-person subjects are a task for the domain's own experts…"), before the `---` that ends the section.**
 
+OLD: (nothing — insertion)
+
 NEW:
 
-> > **▸ In the code.** A subject can be evaluated before anyone holds a key: the first evaluation of an identifier with no row creates one with an empty `signingKeys` list (`web_services/foxx/v6/db.js`, in `evaluate`), and scoring treats it like any other row; the scorer never opens the users collection. A restaurant, a book, or an agent with no key carries evaluations today, as a `users/` document — all that exists for non-person subjects (Section 13).
+> > **▸ In the code.** A subject can be evaluated before its row holds any registered key: the first evaluation of an identifier with no row creates one with an empty `signingKeys` list (`web_services/foxx/v6/db.js:198–203`, in `evaluate`, `dev` @ `469d0b0`), scored like any other row — the scorer never opens the users collection (`scorer/verifications/aura.py`, `dev` @ `469d0b0`). Empty is not proof no one holds a key: `verifyUserSig`'s identifier-derived fallback (`web_services/foxx/v6/operations.js:20–38`, `dev` @ `469d0b0`) applies only before a row exists, not to one evaluation already created.
 >
-> > **▸ Not yet built.** Claiming. No operation lets a key holder take over an existing row: *Add Signing Key* needs a signature from the row itself, *Social Recovery* connections designated in advance.
+> > **▸ Not yet built.** Claiming, for such a row — no registered keys, no recovery connections: no operation registers a key for it. *Add Signing Key* needs the row's own signature, which an empty key list can never give; *Social Recovery* needs recovery connections designated in advance, and none exist.
 
-**§14 — append three questions after question 14, under *Design*.**
+**§14 — append two questions after question 14, under *Design*, and revise question 13 in place.**
 
-NEW:
+OLD (question 13, currently under *Design*):
 
-> 15. How a key holder proves they are the subject a row was evaluated as (Section 3). The key alone does not.
+> 13. How identifiers for non-person subjects are created and deduplicated (Section 3).
+
+NEW (question 13):
+
+> 13. How identifiers are created and deduplicated, and how two rows for one subject are reconciled (Section 3).
+
+NEW (appended after question 14):
+
+> 15. What authorizes control of a row like this, and what establishes the relationship between a claimant and the subject it was evaluated as — the claimant need not be the subject; a restaurant acts through a representative (Section 3).
 > 16. What becomes of evaluations made before a row is claimed (Section 3).
-> 17. How two rows for one subject are reconciled, and by whom (Section 3).
 
 ## Migration Plan
 
