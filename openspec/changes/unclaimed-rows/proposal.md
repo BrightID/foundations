@@ -1,22 +1,22 @@
 ## Why
 
-The document has no vocabulary for a subject nobody has claimed. §3 says a subject needs "a stable identifier, so two evaluators can be sure they mean the same restaurant. Nothing more" — then leaves creation and deduplication to "the domain's own experts" and files the rest as open question 13.
+The document is silent on rows nobody holds a key for, even though the node creates and scores them. §3 says a subject needs "a stable identifier, so two evaluators can be sure they mean the same restaurant. Nothing more" and stops there. Nothing says a row can be created and evaluated before its subject holds any key, and nothing says what the holder of a key could later do about such a row — because no operation does it.
 
-The gap is load-bearing, because what it fails to describe is already how the system works: evaluating an identifier that has no row creates the row, with no signing keys. Ten people pointing at a woman who has never heard of Aura is a supported operation today, and so is Joe's Pizza. The document cannot say that, cannot say what happens when she later takes control of the row, and cannot say which of two rows for the same restaurant everyone should mean.
-
-So everyone building on it is guessing — whether a client creates a row or searches first, and whether evaluations made before a claim stand or are void. That last one is the difference between an inviting system and a hostile one.
+A reader therefore cannot tell what is possible today from what is a design still to be made. This change makes the current behaviour and the gap explicit, so the design conversation starts from a fixed point.
 
 ## What Changes
 
-**§3** gains two short subsections: the two questions asked of a row (*Can it act?* and *Is it the one?*, giving the words **unclaimed** and **canonical**, and separating *canonical* from *primary*), and how a row is created, becomes canonical, and re-points its duplicates. **§13**'s status table gains one row. **§14** question 13 narrows: creation and the re-point mechanism are settled here; what weight of standing makes a row canonical is not, and stays open alongside a possible lockout.
+**§3** gains one **▸ In the code** marker — a row is created by the first evaluation of an identifier, with an empty signing-key list, and is scored like any other — and one **▸ Not yet built** marker: claiming. **§14** gains three open questions, as questions.
 
-No change to scoring, thresholds, levels, storage, or the API. Not breaking.
+Open question 13 is unchanged; new question 17 generalises its deduplication half beyond non-person subjects. §13 is unchanged, and its *Non-person subjects — Not built* row still holds: what exists is the `users/` row, not the domain around it.
+
+Under 150 words of net new document text. *Canonical*, *primary*, a claim mechanism, and a two-axis framing are deliberately not introduced — see `design.md`.
 
 ## Capabilities
 
 ### New Capabilities
 
-None. This change sets `skip_specs: true`, for the reason the previous change did: this repo holds one evolving narrative document, not discrete capability specs.
+None. `skip_specs: true`, for the reason the previous change gave: this repo holds one evolving narrative document, not discrete capability specs.
 
 ### Modified Capabilities
 
@@ -24,8 +24,8 @@ None.
 
 ## Impact
 
-- `how-aura-works.md` §3, §13, §14. Roughly 280 words of net new prose.
-- **The node.** No scorer change: the scorer never opens the users collection, so an unclaimed row already receives a subject score and a level on the next batch exactly like a live account. Claiming does need a new operation — *Add Signing Key* requires the row's own signature and *Social Recovery* requires a pre-designated recovery set, so neither reaches a row that arrived unclaimed. Additive either way; nothing existing changes meaning.
-- **The Player and front-end apps.** Subject creation acquires a stated rule: search for a canonical row first, create only if none is found, never present an unclaimed row as an absent one. Re-pointing needs a one-tap affordance.
-- **Anything consuming a subject level.** A level on an unclaimed row means what a level on a claimed one means, so consumers should not filter on key-holding — but they inherit a disclosed limit: unclaimed rows accumulate positives while shielded from the negatives a live account attracts, so their scores read high.
-- **Unblocks** backing — agent registration, company attribution, declared alternates — which all need a canonical identifier before there is anything to back.
+- `how-aura-works.md` §3 and §14.
+- **The node.** No change. Row creation and scoring as described already ship; claiming would need a new operation, which this change does not specify.
+- **Scoring.** No change — the scorer never opens the users collection.
+- **Front-end apps.** No change. `aura-player` has no node client and issues no *Evaluate* operation, so it does not create these rows today; any client that issues one already does.
+- **Any claim mechanism designed later** must answer the three new open questions before it can be built: proving the key holder is the subject, the standing of pre-claim evaluations, and reconciling two rows for one subject.
